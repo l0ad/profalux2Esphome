@@ -1,0 +1,39 @@
+esphome:
+  name: profalux2esphome
+
+esp8266:
+  board: d1_mini_lite
+
+# (missing elements like wifi, ... should be inserted here)
+# ...
+#
+
+switch:
+  - platform: gpio	
+    pin: D6
+    id: down
+    name: "Down"
+    on_turn_on:
+    - delay: 500ms
+    - switch.turn_off: down
+    restore_mode: ALWAYS_OFF 
+  - platform: gpio
+    pin: D7
+    id: stop
+    name: "Stop"
+    on_turn_on:
+    - delay: 500ms
+    - switch.turn_off: stop
+    restore_mode: ALWAYS_OFF 
+  - platform: gpio
+    pin: D8
+    id: up
+    name: "Up"
+    on_turn_on:
+    - delay: 500ms
+    - switch.turn_off: up
+    restore_mode: ALWAYS_OFF 
+  
+
+web_server:
+  port: 80

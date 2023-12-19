@@ -1,0 +1,71 @@
+esphome:
+  name: profalux2esphome
+
+esp8266:
+  board: d1_mini_lite
+
+# (missing elements like wifi, ... should be inserted here)
+# ...
+#
+
+substitutions:
+  down_pin: 'D6'
+  stop_pin: 'D7'
+  up_pin: 'D8'
+
+output:
+  - platform: gpio
+    pin: ${down_pin}
+    id: gpio_down
+  - platform: gpio
+    pin: ${stop_pin}
+    id: gpio_stop
+  - platform: gpio
+    pin: ${up_pin}
+    id: gpio_up
+
+switch:
+  - platform: output
+    output: gpio_down
+    id: down
+    name: "Down"
+    on_turn_on:
+    - lambda: |-
+        pinMode(${down_pin}, OUTPUT);
+        digitalWrite(${down_pin}, HIGH);
+    - delay: 500ms
+    - switch.turn_off: down
+    on_turn_off:
+    - lambda: |-
+        pinMode(${down_pin}, INPUT);
+    restore_mode: ALWAYS_OFF
+
+  - platform: output
+    output: gpio_stop
+    id: stop
+    name: "Stop"
+    on_turn_on:
+    - lambda: |-
+        pinMode(${stop_pin}, OUTPUT);
+        digitalWrite(${stop_pin}, HIGH);
+    - delay: 500ms
+    - switch.turn_off: stop
+    on_turn_off:
+    - lambda: |-
+        pinMode(${stop_pin}, INPUT);
+    restore_mode: ALWAYS_OFF
+
+  - platform: output
+    output: gpio_up
+    id: up
+    name: "Up"
+    on_turn_on:
+    - lambda: |-
+        pinMode(${up_pin}, OUTPUT);
+        digitalWrite(${up_pin}, HIGH);
+    - delay: 500ms
+    - switch.turn_off: up
+    on_turn_off:
+    - lambda: |-
+        pinMode(${up_pin}, INPUT);
+    restore_mode: ALWAYS_OFF
