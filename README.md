@@ -1,5 +1,6 @@
 # Profalux 868MHz (not _ZigBee_) roller shutter integration to EspHome/HA
 
+
 > This project has been made with the help of [Tam](https://github.com/TamGit) and [Gérard/F6EEQ](https://github.com/F6EEQ).
 
 <a href= "img/EMPX-B1.jpg">
@@ -31,6 +32,24 @@ To get *Home Assitant* being able to control roller shutters, remote integration
 
 The following gives details about the journey.
 
+
+## Table of contents 
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [A few words about the remote](#a-few-words-about-the-remote)
+- [Step 1: Figuring things out ](#step-1-figuring-things-out)
+- [Step 2: Pressing remote buttons using a micro-controller.](#step-2-pressing-remote-buttons-using-a-micro-controller)
+	* [Soldering a connector with `GND` pin](#soldering-a-connector-with-gnd-pin)
+   * [Connecting the ESP](#connecting-the-esp)
+   * [PoC Arduino sketch](#poc-arduino-sketch)
+- [Step 3: Making it the EspHome/HA way](#step-3-making-it-the-esphomeha-way)
+   * [Configuration 1: easy but with cons](#configuration-1-easy-but-with-cons)
+   * [Configuration 2: Making button pressable again](#configuration-2-making-button-pressable-again)
+- [A case, just in case ;-)](#a-case-just-in-case-)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="a-few-words-about-the-remote"></a>
 ## A few words about the remote
 
 <a href= "img/EMPX-B1-board.png">
@@ -52,6 +71,7 @@ A **diode** protect the battery against receiving current from the outside throu
 > By the way, **in order not to destroy any existing remote**, it s a good idea to search for a **spare one**. A brand new remote costs more or less 70 Euros but refurbished can be found for half that price.
 
 
+<!-- TOC --><a name="step-1-figuring-things-out"></a>
 ## Step 1: Figuring things out 
 
 <a href= "img/EMPX-B1-board-figuredOut.png">
@@ -83,9 +103,11 @@ As the remote will be connected to a USB-powered ESP board, the **battery is no 
 <br/><br/><br/><br/><br/><br/><br/><br/>
 
 
+<!-- TOC --><a name="step-2-pressing-remote-buttons-using-a-micro-controller"></a>
 ## Step 2: pressing remote buttons using a micro-controller.
 
 
+<!-- TOC --><a name="soldering-a-connector-with-gnd-pin"></a>
 ### Soldering a connector with `GND` pin
 
 In order to connect the remote to the ESP, `GND` pin has to be provided.
@@ -106,6 +128,7 @@ This can be done simply by:
 <img src = "img/Profalux-Back-after.jpg" width="23%"/>
 </a>
 
+<!-- TOC --><a name="connecting-the-esp"></a>
 ### Connecting the ESP
 
 <a href= "img/d1-mini-pinout.png">
@@ -126,6 +149,7 @@ The ESP used is an ESP8266-based [`Wemos D1 mini V3.0`](https://www.randomdiypro
 |    `GND `    |     `GND`   |
 
 
+<!-- TOC --><a name="poc-arduino-sketch"></a>
 ### PoC Arduino sketch
 
 The following [Arduino sketch](./Profalux2Esphome.ino) can be used to check if button press are properly emulated by the ESP: 
@@ -170,10 +194,12 @@ void loop() {
 }
 ```
 
-## Step 3: make it the EspHome/HA way
+<!-- TOC --><a name="step-3-making-it-the-esphomeha-way"></a>
+## Step 3: Making it the EspHome/HA way
 
 > To get the D1 board running EspHome firmware, refer to `Getting started` section of the [official documentation](https://esphome.io).
 
+<!-- TOC --><a name="configuration-1-easy-but-with-cons"></a>
 ### Configuration 1: easy but with cons
 
 Configuring the EspHome device is pretty straightforward, as buttons can be considered as [momentary swicthes](https://esphome.io/components/switch/gpio.html).
@@ -228,7 +254,8 @@ web_server:
 
 > `web_server` section is useful only when using EspHome without HA, to be able to toogle buttons through device dashboard.
 
-### Configuration 2: make button pressable again
+<!-- TOC --><a name="configuration-2-making-button-pressable-again"></a>
+### Configuration 2: Making button pressable again
 
 In order to bring back physical buttons to life, GPIO pin mode has to be changed to `INPUT` when switch is in `OFF` state.
 
@@ -309,7 +336,41 @@ switch:
   
 ```
 
+<!-- TOC --><a name="a-case-just-in-case-"></a>
+## A case, just in case ;-)
+
+
+<a href= "img/EMPX-B1.jpg">
+<img align="left" src = "img/Profalux2EspHome_Case-MAI-EMPX-B1-Base.png" width="30%"/>
+</a>
+&nbsp;
+<br/><br/><br/><br/>
+
+The original case was too thin to fit the ESP and connectors.
+
+So, thanks to Tam who helped me to understand [FreeCad](https://www.freecad.org) basics and gave me hints to deal with it, i've made a **replacement case**.
+
+**Model files**, in STL and STEP format, are availbale under `3D` subfolder. Enjoy it!
+
+&nbsp;
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+
+
 Job done! <br/> [S.](https://github.com/sebastienjean)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
